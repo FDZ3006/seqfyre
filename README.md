@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🔥 SeqFyre
+# SeqFyre
 
 **Pipeline analisis struktur data untuk gen 16S rRNA — mengurutkan sekuens berdasarkan GC content dan menyingkap gradien termal bakteri.**
 
@@ -12,7 +12,7 @@ Mini Project · Struktur Data Bioinformatika (BIF1223) · IPB University
 
 ---
 
-## 📖 Ringkasan
+## Ringkasan
 
 **SeqFyre** (dari *Sequence* + *Fyre*/api) adalah aplikasi analisis bioinformatika yang membaca berkas FASTA/FASTQ gen 16S rRNA, menghitung frekuensi nukleotida, mengurutkan sekuens berdasarkan **GC content**, dan memvisualisasikan hasilnya. Tersedia dalam dua antarmuka:
 
@@ -23,7 +23,7 @@ Inti dari proyek ini bukan sekadar manipulasi string: ketika sekuens diurutkan m
 
 ---
 
-## 🧬 Data Understanding — mengapa dataset ini
+## Data Understanding — mengapa dataset ini
 
 Stabilitas struktural asam nukleat sangat dipengaruhi suhu lingkungan. Pasangan basa **Guanin–Sitosin (G–C)** terikat oleh tiga ikatan hidrogen dan memiliki gaya *base-stacking* yang kuat, sehingga jauh lebih stabil secara termodinamika dibanding pasangan **Adenin–Timin (A–T)** yang hanya memiliki dua ikatan hidrogen. Akibatnya, bakteri **termofilik** — yang hidup di sumber air panas dan ventilasi hidrotermal — berevolusi memperkaya kandungan G dan C pada gen struktural RNA-nya untuk mencegah denaturasi pada suhu ekstrem.
 
@@ -52,27 +52,27 @@ Berkas: [`data/dataset_16S_rRNA_SeqFyre.fasta`](data/dataset_16S_rRNA_SeqFyre.fa
 
 ---
 
-## ✨ Fitur
+## Fitur
 
 **Wajib (terpenuhi penuh):**
-- ✅ Membaca berkas **FASTA** atau **FASTQ**
-- ✅ Menyimpan data dalam struktur **List**
-- ✅ Menghitung frekuensi nukleotida memakai **Dictionary**
-- ✅ Mengurutkan sekuens berdasarkan **GC content**
-- ✅ Menampilkan **3 sekuens terbaik**
-- ✅ **Visualisasi grafik** berdasarkan nilai GC
-- ✅ Menulis hasil ke berkas **CSV**
+- Membaca berkas **FASTA** atau **FASTQ**
+- Menyimpan data dalam struktur **List**
+- Menghitung frekuensi nukleotida memakai **Dictionary**
+- Mengurutkan sekuens berdasarkan **GC content**
+- Menampilkan **3 sekuens terbaik**
+- **Visualisasi grafik** berdasarkan nilai GC
+- Menulis hasil ke berkas **CSV**
 
 **Bonus:**
-- 🌐 **Web app Flask** siap deploy ke Render (gratis, tanpa instalasi bagi pengguna)
-- 📦 Dukungan unggah **FASTA, FASTQ, dan ZIP** (ZIP berisi banyak berkas otomatis digabung)
-- 🔢 Tabel **Top-N konfigurabel** (3 / 5 / 10)
-- 📊 **4 grafik EDA** (histogram, bar chart, komposisi, scatter)
-- 💾 **Unduh ZIP** hasil (CSV + grafik) — dibuat *in-memory*
-- 🧱 **Kode OOP** dengan kelas terpisah (`SequenceRecord`, `Parser`, `Analyzer`)
-- 🌏 **Dwibahasa** — Indonesia utama, toggle Inggris di web app
-- 🧪 **BioPython** sebagai parser utama (dengan fallback pure-Python)
-- ✔️ **Suite pengujian** unit (`tests/`)
+- **Web app Flask** siap deploy ke Render (gratis, tanpa instalasi bagi pengguna)
+- Dukungan unggah **FASTA, FASTQ, dan ZIP** (ZIP berisi banyak berkas otomatis digabung)
+- Tabel **Top-N konfigurabel** (3 / 5 / 10)
+- **4 grafik EDA** (histogram, bar chart, komposisi, scatter)
+- **Unduh ZIP** hasil (CSV + grafik) — dibuat *in-memory*
+- **Kode OOP** dengan kelas terpisah (`SequenceRecord`, `Parser`, `Analyzer`)
+- **Dwibahasa** — Indonesia utama, toggle Inggris di web app
+- **BioPython** sebagai parser utama (dengan fallback pure-Python)
+- **Suite pengujian** unit (`tests/`)
 
 ---
 
@@ -116,7 +116,7 @@ seqfyre/
 
 ---
 
-## 🚀 Cara menjalankan
+## Cara menjalankan
 
 ### 1. Lokal — siapkan lingkungan
 
@@ -153,7 +153,7 @@ python -m unittest discover -s tests -v
 
 ---
 
-## ☁️ Deploy ke Render
+## Deploy ke Render
 
 SeqFyre dirancang untuk Render free tier. Dua cara:
 
@@ -172,12 +172,12 @@ SeqFyre dirancang untuk Render free tier. Dua cara:
 Setelah live, perbarui tautan demo di sini:
 
 ```
-🔗 Demo: https://<nama-app>.onrender.com
+Demo: https://<nama-app>.onrender.com
 ```
 
 ---
 
-## 📊 Eksplorasi Data (EDA)
+## Eksplorasi Data (EDA)
 
 Keempat grafik berikut dihasilkan otomatis dari dataset bawaan.
 
@@ -203,7 +203,7 @@ Titik-titik berkumpul vertikal di ~1.500 bp (homogenitas panjang 16S rRNA), ters
 
 ---
 
-## 🏆 Hasil
+## Hasil
 
 Pengurutan menurun berdasarkan GC content menempatkan tiga hipertermofil/termofil di puncak:
 
@@ -217,10 +217,10 @@ Keempat termofil (termasuk *Geobacillus*, 59.44%) menempati rank 1–4, dan keen
 
 ---
 
-## 🛠 Teknologi
+## Teknologi
 
 Python 3.12 · Flask · BioPython · Matplotlib · Gunicorn · HTML/CSS/JavaScript (vanilla)
 
-## 📄 Lisensi
+## Lisensi
 
 [MIT](LICENSE) © 2026 SeqFyre — dikembangkan untuk Mini Project BIF1223, IPB University.
