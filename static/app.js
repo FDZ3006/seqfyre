@@ -1,73 +1,69 @@
 /* ============================================================
-   SeqFyre — frontend logic
-   Menangani: unggah berkas, pilihan Top-N, panggilan ke backend,
-   render hasil (statistik, kolom termal, tabel, grafik), unduhan,
-   dan pengalih bahasa ID/EN.
+   SeqFyre - frontend logic
+   Menangani: pengalih tema (light/dark/red), pengalih bahasa
+   (ID/EN), unggah berkas, pilihan Top-N, panggilan ke backend,
+   render hasil (statistik, kolom termal, tabel, grafik), unduhan.
+   Pilihan tema & bahasa disimpan di localStorage.
    ============================================================ */
 
 // -------------------- Kamus terjemahan (i18n) -------------------- //
 const I18N = {
   id: {
-    tagline: "16S rRNA · analisis termal",
+    tagline: "analisis sekuens · GC content",
     eyebrow: "Pipeline struktur data bioinformatika",
-    title: 'Urutkan sekuens.<br /><span class="accent">Temukan panasnya.</span>',
+    title: 'Analisis GC content<br />sekuens nukleotida.',
     subtitle:
-      "Unggah berkas FASTA/FASTQ gen 16S rRNA. SeqFyre menghitung GC content, " +
-      "mengurutkannya, dan menyingkap gradien termal — bakteri termofil naik ke " +
-      "puncak, mesofil mengendap di dasar.",
+      "Unggah berkas FASTA atau FASTQ. SeqFyre membaca sekuens, menghitung " +
+      "frekuensi nukleotida, mengurutkan berdasarkan GC content, dan menghasilkan " +
+      "visualisasi serta ekspor CSV.",
     dz_main: "Letakkan berkas di sini atau klik untuk memilih",
-    dz_sub: "FASTA · FASTQ · ZIP — maks 16 MB",
+    dz_sub: "FASTA · FASTQ · ZIP - maks 16 MB",
     topn_label: "Tampilkan teratas:",
     demo_btn: "Coba dataset demo",
     analyze_btn: "Analisis",
     download_btn: "Unduh ZIP (CSV + grafik)",
     sec_summary: "Ringkasan",
-    sec_thermal: "Kolom termal — sekuens terbaik",
+    sec_thermal: "Kolom termal - sekuens terbaik",
     sec_table: "Tabel lengkap (terurut GC)",
     sec_eda: "Eksplorasi data (EDA)",
     foot: "SeqFyre · Mini Project Struktur Data Bioinformatika (BIF1223) · IPB University",
-    // status & dinamis
     busy: "Menganalisis…",
-    done: "Selesai — mesin: ",
+    done: "Selesai - mesin: ",
     no_file: "Pilih berkas terlebih dahulu.",
     file_ready: "Berkas siap: ",
     err: "Galat: ",
-    // label statistik
     st_total: "Total sekuens",
     st_meangc: "Rata-rata GC",
     st_thermo: "Termofil",
     st_meso: "Mesofil",
-    // header tabel
     th_rank: "Rank", th_acc: "Aksesi", th_org: "Organisme", th_len: "Panjang",
     th_gc: "GC (%)", th_a: "A", th_t: "T", th_g: "G", th_c: "C", th_n: "N", th_cls: "Kelas",
     cls_thermo: "Termofil", cls_meso: "Mesofil",
-    // judul grafik
     p_hist: "Histogram distribusi GC",
     p_bar: "GC per sekuens",
     p_comp: "Komposisi nukleotida",
     p_scatter: "Panjang vs GC",
   },
   en: {
-    tagline: "16S rRNA · thermal analysis",
+    tagline: "sequence analysis · GC content",
     eyebrow: "Bioinformatics data-structure pipeline",
-    title: 'Sort the sequences.<br /><span class="accent">Find the heat.</span>',
+    title: 'Nucleotide sequence<br />GC content analysis.',
     subtitle:
-      "Upload a 16S rRNA FASTA/FASTQ file. SeqFyre computes GC content, sorts it, " +
-      "and reveals the thermal gradient — thermophiles rise to the top, mesophiles " +
-      "settle at the bottom.",
+      "Upload a FASTA or FASTQ file. SeqFyre reads your sequences, computes " +
+      "nucleotide frequency, sorts by GC content, and produces charts and a CSV export.",
     dz_main: "Drop a file here or click to choose",
-    dz_sub: "FASTA · FASTQ · ZIP — max 16 MB",
+    dz_sub: "FASTA · FASTQ · ZIP - max 16 MB",
     topn_label: "Show top:",
     demo_btn: "Try demo dataset",
     analyze_btn: "Analyze",
     download_btn: "Download ZIP (CSV + charts)",
     sec_summary: "Summary",
-    sec_thermal: "Thermal column — best sequences",
+    sec_thermal: "Thermal column - best sequences",
     sec_table: "Full table (sorted by GC)",
     sec_eda: "Exploratory data analysis (EDA)",
     foot: "SeqFyre · Bioinformatics Data Structures Mini Project (BIF1223) · IPB University",
     busy: "Analyzing…",
-    done: "Done — engine: ",
+    done: "Done - engine: ",
     no_file: "Choose a file first.",
     file_ready: "File ready: ",
     err: "Error: ",
@@ -86,30 +82,46 @@ const I18N = {
 };
 
 let lang = "id";
-let lastResult = null;     // payload terakhir (untuk render ulang saat ganti bahasa)
+let lastResult = null;
 let selectedFile = null;
 let topN = 3;
 
 const $ = (sel) => document.querySelector(sel);
 const t = (key) => I18N[lang][key] ?? key;
 
-// -------------------- i18n: terapkan ke DOM -------------------- //
+// -------------------- Tema -------------------- //
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  try { localStorage.setItem("seqfyre-theme", theme); } catch (e) {}
+  document.querySelectorAll("#themeSeg button").forEach((b) =>
+    b.classList.toggle("active", b.dataset.themeVal === theme)
+  );
+}
+
+document.querySelectorAll("#themeSeg button").forEach((btn) => {
+  btn.addEventListener("click", () => applyTheme(btn.dataset.themeVal));
+});
+
+// -------------------- i18n -------------------- //
 function applyI18n() {
   document.documentElement.lang = lang;
+  try { localStorage.setItem("seqfyre-lang", lang); } catch (e) {}
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     el.innerHTML = t(el.dataset.i18n);
   });
-  // Render ulang hasil agar label tabel/grafik ikut berganti bahasa.
+  document.querySelectorAll("#langSeg button").forEach((b) =>
+    b.classList.toggle("active", b.dataset.lang === lang)
+  );
+  // Update status bar jika ada pesan terakhir
+  const statusEl = $("#status");
+  if (statusEl.classList.contains("ok") && lastResult) {
+    setStatus(t("done") + lastResult.engine, "ok");
+  }
   if (lastResult) renderResults(lastResult);
 }
 
-document.querySelectorAll(".lang button").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    lang = btn.dataset.lang;
-    document.querySelectorAll(".lang button").forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
-    applyI18n();
-  });
+document.querySelectorAll("#langSeg button").forEach((btn) => {
+  btn.addEventListener("click", () => { lang = btn.dataset.lang; applyI18n(); });
 });
 
 // -------------------- Pemilihan berkas -------------------- //
@@ -148,19 +160,18 @@ $("#topnSeg").addEventListener("click", (e) => {
   topN = parseInt(btn.dataset.n, 10);
   $("#topnSeg").querySelectorAll("button").forEach((b) => b.classList.remove("active"));
   btn.classList.add("active");
-  // Jika sudah ada hasil, perbarui kolom termal mengikuti Top-N baru.
   if (lastResult && selectedFile) analyze();
   else if (lastResult && lastResult._demo) runDemo();
 });
 
-// -------------------- Status helper -------------------- //
+// -------------------- Status -------------------- //
 function setStatus(msg, cls = "") {
   const el = $("#status");
   el.textContent = msg;
   el.className = "status " + cls;
 }
 
-// -------------------- Panggilan backend -------------------- //
+// -------------------- Backend -------------------- //
 $("#analyzeBtn").addEventListener("click", analyze);
 $("#demoBtn").addEventListener("click", runDemo);
 
@@ -199,15 +210,13 @@ async function postAnalyze(url, formData, isDemo) {
   }
 }
 
-// -------------------- Render hasil -------------------- //
+// -------------------- Render -------------------- //
 function renderResults(data) {
   renderStats(data.summary);
   renderThermal(data.top);
   renderTable(data.table);
   renderPlots(data.plots);
-  $("#downloadBtn").onclick = () => {
-    window.location.href = "/download/" + data.token;
-  };
+  $("#downloadBtn").onclick = () => { window.location.href = "/download/" + data.token; };
 }
 
 function renderStats(s) {
@@ -275,5 +284,14 @@ function renderPlots(plots) {
   ).join("");
 }
 
-// init
-applyI18n();
+// -------------------- Init -------------------- //
+(function init() {
+  let savedTheme = "light", savedLang = "id";
+  try {
+    savedTheme = localStorage.getItem("seqfyre-theme") || "light";
+    savedLang = localStorage.getItem("seqfyre-lang") || "id";
+  } catch (e) {}
+  applyTheme(savedTheme);
+  lang = savedLang;
+  applyI18n();
+})();
