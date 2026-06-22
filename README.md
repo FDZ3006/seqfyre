@@ -2,14 +2,13 @@
 
 Pipeline analisis GC content untuk sekuens nukleotida berbasis Python. Membaca berkas FASTA atau FASTQ, menghitung frekuensi nukleotida, mengurutkan sekuens berdasarkan GC content, dan menghasilkan visualisasi serta ekspor CSV.
 
-**Demo:** https://web-production-4b2df.up.railway.app
+**Akses langsung (tanpa instalasi):** https://web-production-4b2df.up.railway.app
 
 ---
 
 **Mata Kuliah:** Struktur Data Bioinformatika (BIF1223)  
 **Program Studi:** Bioinformatika, IPB University  
-**Penulis:** Fajar Dhuha Zafran (G0401241009)  
-**Deadline:** 27 Juni 2026
+**Penulis:** Fajar Dhuha Zafran (G0401241009)
 
 ---
 
@@ -19,7 +18,7 @@ Pipeline analisis GC content untuk sekuens nukleotida berbasis Python. Membaca b
 - [Dataset](#dataset)
 - [Fitur](#fitur)
 - [Struktur Proyek](#struktur-proyek)
-- [Cara Menjalankan](#cara-menjalankan)
+- [Cara Menggunakan](#cara-menggunakan)
 - [Hasil Analisis](#hasil-analisis)
 - [Eksplorasi Data](#eksplorasi-data)
 - [Pengujian](#pengujian)
@@ -74,7 +73,7 @@ Poin wajib yang dipenuhi:
 
 Fitur tambahan:
 
-- Antarmuka web (Flask) yang dapat diakses langsung dari browser
+- Antarmuka web (Flask) yang dapat diakses langsung dari browser tanpa instalasi
 - Dukungan unggah berkas FASTA, FASTQ, dan ZIP
 - 4 grafik eksplorasi data (histogram, bar chart, komposisi nukleotida, scatter plot)
 - Unduhan hasil analisis dalam format ZIP berisi CSV dan grafik
@@ -118,14 +117,15 @@ seqfyre/
 
 ---
 
-## Cara Menjalankan
+## Cara Menggunakan
 
-### Prasyarat
+### Via Website (disarankan)
 
-- Python 3.12 atau lebih baru
-- pip
+Buka https://web-production-4b2df.up.railway.app di browser, unggah berkas FASTA/FASTQ atau klik "Coba dataset demo", lalu unduh hasilnya. Tidak perlu instalasi apapun.
 
-### Instalasi
+### Via Lokal
+
+Untuk menjalankan di komputer sendiri:
 
 ```bash
 git clone https://github.com/FDZ3006/seqfyre.git
@@ -133,19 +133,12 @@ cd seqfyre
 python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-```
-
-### Menjalankan Web App
-
-```bash
 python app.py
 ```
 
-Buka `http://127.0.0.1:5000` di browser, lalu unggah berkas FASTA/FASTQ atau klik "Coba dataset demo".
+Buka `http://127.0.0.1:5000` di browser.
 
-Atau akses versi yang sudah di-deploy di: https://web-production-4b2df.up.railway.app
-
-### Menjalankan CLI
+### Via Command Line
 
 ```bash
 python cli.py data/dataset_16S_rRNA_SeqFyre.fasta --top 3 --outdir hasil
@@ -172,7 +165,7 @@ Hasil pengurutan sekuens dataset bawaan berdasarkan GC content (menurun):
 | 9 | NR_112081.1 | Herbaspirillum rubrisubalbicans | 53.21 | Mesofilik |
 | 10 | NR_118997.2 | Staphylococcus aureus | 51.03 | Mesofilik |
 
-Keempat bakteri termofilik menempati rank 1-4, dan keenam bakteri mesofilik menempati rank 5-10. Pipeline berhasil menstratifikasi organisme sesuai dengan suhu pertumbuhannya.
+Keempat bakteri termofilik menempati rank 1-4 dan keenam bakteri mesofilik menempati rank 5-10. Pipeline berhasil menstratifikasi organisme sesuai dengan suhu pertumbuhannya.
 
 ---
 
@@ -220,14 +213,13 @@ python -m unittest discover -s tests -v
 
 A Python-based GC content analysis pipeline for nucleotide sequences. Reads FASTA or FASTQ files, computes nucleotide frequency, sorts sequences by GC content, and produces visualizations and CSV export.
 
-**Demo:** https://web-production-4b2df.up.railway.app
+**Access directly (no installation required):** https://web-production-4b2df.up.railway.app
 
 ---
 
 **Course:** Bioinformatics Data Structures (BIF1223)  
 **Study Program:** Bioinformatics, IPB University  
-**Author:** Fajar Dhuha Zafran (G0401241009)  
-**Deadline:** June 27, 2026
+**Author:** Fajar Dhuha Zafran (G0401241009)
 
 ---
 
@@ -278,7 +270,7 @@ Mandatory requirements fulfilled:
 
 Additional features:
 
-- Web interface (Flask) accessible directly from browser
+- Web interface (Flask) accessible directly from browser without installation
 - Support for FASTA, FASTQ, and ZIP file uploads
 - 4 exploratory data analysis charts (histogram, bar chart, nucleotide composition, scatter plot)
 - Download analysis results as ZIP containing CSV and charts
@@ -307,16 +299,30 @@ seqfyre/
 └── requirements.txt
 ```
 
+### Class Overview
+
+| Class | Responsibility |
+|-------|----------------|
+| `SequenceRecord` | Stores a single sequence with metadata. Computes nucleotide frequency (Dictionary) and GC content. |
+| `Parser` | Converts FASTA, FASTQ, or ZIP files into a List of SequenceRecord objects. Uses BioPython when available, falls back to a manual parser otherwise. |
+| `Analyzer` | Sorts the List by GC content, retrieves Top-N sequences, computes aggregate statistics, and produces CSV and EDA charts. |
+
+### Data Structures Used
+
+- **Dictionary** for computing nucleotide frequency per sequence. Average O(1) access per base, total O(n) for one sequence.
+- **List** for storing all SequenceRecord objects. Sorted using Python's built-in Timsort with O(M log M) complexity, where M is the number of sequences.
+
 ---
 
-## How to Run
+## How to Use
 
-### Prerequisites
+### Via Website (recommended)
 
-- Python 3.12 or newer
-- pip
+Open https://web-production-4b2df.up.railway.app in your browser, upload a FASTA/FASTQ file or click "Coba dataset demo", then download the results. No installation required.
 
-### Installation
+### Via Local
+
+To run on your own machine:
 
 ```bash
 git clone https://github.com/FDZ3006/seqfyre.git
@@ -324,19 +330,12 @@ cd seqfyre
 python -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-```
-
-### Running the Web App
-
-```bash
 python app.py
 ```
 
-Open `http://127.0.0.1:5000` in your browser, then upload a FASTA/FASTQ file or click "Coba dataset demo".
+Open `http://127.0.0.1:5000` in your browser.
 
-Or access the deployed version at: https://web-production-4b2df.up.railway.app
-
-### Running the CLI
+### Via Command Line
 
 ```bash
 python cli.py data/dataset_16S_rRNA_SeqFyre.fasta --top 3 --outdir hasil
@@ -364,6 +363,32 @@ Sequences from the built-in dataset sorted by GC content (descending):
 | 10 | NR_118997.2 | Staphylococcus aureus | 51.03 | Mesophile |
 
 All four thermophilic bacteria occupy ranks 1-4, and all six mesophilic bacteria occupy ranks 5-10. The pipeline successfully stratifies organisms according to their growth temperature.
+
+---
+
+## Exploratory Data Analysis
+
+### GC Distribution Histogram
+
+![Histogram GC](assets/histogram_gc.png)
+
+The GC content distribution shows a bimodal pattern with two clearly separated groups: mesophilic bacteria in the 51-55% range and thermophilic bacteria in the 59-65% range.
+
+### GC Content per Sequence
+
+![Bar chart GC](assets/barchart_gc.png)
+
+### Nucleotide Composition
+
+![Composition](assets/composition.png)
+
+Thermophilic bacteria show higher G and C content with lower A content compared to mesophilic bacteria.
+
+### Sequence Length vs GC Content
+
+![Scatter](assets/scatter_len_gc.png)
+
+Data points cluster around 1,450-1,580 bp, reflecting the length homogeneity of 16S rRNA genes. Separation along the GC content axis corresponds to the ecological group of each organism.
 
 ---
 
