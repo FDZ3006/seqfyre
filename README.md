@@ -1,6 +1,6 @@
 # SeqFyre
 
-Pipeline analisis GC content untuk sekuens nukleotida berbasis Python. Membaca berkas FASTA atau FASTQ, menghitung frekuensi nukleotida, mengurutkan sekuens berdasarkan GC content, dan menghasilkan visualisasi serta ekspor CSV.
+Pipeline analisis GC content untuk sekuens nukleotida. Seluruh logika inti diimplementasikan dalam Python. Membaca berkas FASTA atau FASTQ, menghitung frekuensi nukleotida, mengurutkan sekuens berdasarkan GC content, dan menghasilkan visualisasi serta ekspor CSV. HTML, CSS, dan JavaScript yang ada di repositori hanya berfungsi sebagai antarmuka tampilan web dan tidak mengandung logika analisis.
 
 **Akses langsung (tanpa instalasi):** https://web-production-4b2df.up.railway.app
 
@@ -61,6 +61,7 @@ Berkas: `data/dataset_16S_rRNA_SeqFyre.fasta`
 
 ## Fitur
 
+Seluruh poin berikut diimplementasikan dalam Python menggunakan struktur data List dan Dictionary sebagai inti pipeline.
 Poin wajib yang dipenuhi:
 
 - Membaca berkas FASTA atau FASTQ
@@ -211,7 +212,7 @@ python -m unittest discover -s tests -v
 
 # SeqFyre
 
-A Python-based GC content analysis pipeline for nucleotide sequences. Reads FASTA or FASTQ files, computes nucleotide frequency, sorts sequences by GC content, and produces visualizations and CSV export.
+All core logic is implemented in Python. Reads FASTA or FASTQ files, computes nucleotide frequency, sorts sequences by GC content, and produces visualizations and CSV export. HTML, CSS, and JavaScript in this repository serve only as the web display interface and contain no analysis logic.
 
 **Access directly (no installation required):** https://web-production-4b2df.up.railway.app
 
@@ -257,7 +258,7 @@ File: `data/dataset_16S_rRNA_SeqFyre.fasta`
 ---
 
 ## Features
-
+All mandatory points below are fully implemented in Python using List and Dictionary data structures as the core of the pipeline.
 Mandatory requirements fulfilled:
 
 - Read FASTA or FASTQ files
@@ -318,7 +319,7 @@ seqfyre/
 
 ### Via Website (recommended)
 
-Open https://web-production-4b2df.up.railway.app in your browser, upload a FASTA/FASTQ file or click "Coba dataset demo", then download the results. No installation required.
+Open https://web-production-4b2df.up.railway.app in your browser, upload a FASTA/FASTQ file or click "Try demo dataset", then download the results. No installation required.
 
 ### Via Local
 
