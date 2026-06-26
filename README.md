@@ -6,7 +6,7 @@ Pipeline analisis GC content untuk sekuens nukleotida. Seluruh logika inti diimp
 
 ---
 
-**Mata Kuliah:** Struktur Data Bioinformatika (BIF1223)  
+**Mata Kuliah:** Struktur Data Bioinformatika (BIF1222)  
 **Program Studi:** Bioinformatika, IPB University  
 **Penulis:** Fajar Dhuha Zafran (G0401241009)
 
@@ -218,7 +218,7 @@ All core logic is implemented in Python. Reads FASTA or FASTQ files, computes nu
 
 ---
 
-**Course:** Bioinformatics Data Structures (BIF1223)  
+**Course:** Bioinformatics Data Structures (BIF1222)  
 **Study Program:** Bioinformatics, IPB University  
 **Author:** Fajar Dhuha Zafran (G0401241009)
 
@@ -403,4 +403,4 @@ python -m unittest discover -s tests -v
 
 ---
 
-*SeqFyre - Mini Project Struktur Data Bioinformatika (BIF1223), IPB University*
+*SeqFyre - Mini Project Struktur Data Bioinformatika (BIF1222), IPB University*
