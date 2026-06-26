@@ -4,6 +4,8 @@ Pipeline analisis GC content untuk sekuens nukleotida. Seluruh logika inti diimp
 
 **Akses langsung (tanpa instalasi):** https://web-production-4b2df.up.railway.app
 
+**Download aplikasi desktop:** [SeqFyre.exe - GitHub Releases](https://github.com/FDZ3006/seqfyre/releases/latest) (Windows, tidak perlu install Python)
+
 ---
 
 **Mata Kuliah:** Struktur Data Bioinformatika (BIF1222)  
@@ -19,6 +21,10 @@ Pipeline analisis GC content untuk sekuens nukleotida. Seluruh logika inti diimp
 - [Fitur](#fitur)
 - [Struktur Proyek](#struktur-proyek)
 - [Cara Menggunakan](#cara-menggunakan)
+  - [Via Website](#via-website-disarankan)
+  - [Via Desktop App](#via-desktop-app)
+  - [Via Lokal](#via-lokal)
+  - [Via Command Line](#via-command-line)
 - [Hasil Analisis](#hasil-analisis)
 - [Eksplorasi Data](#eksplorasi-data)
 - [Pengujian](#pengujian)
@@ -124,6 +130,10 @@ seqfyre/
 
 Buka https://web-production-4b2df.up.railway.app di browser, unggah berkas FASTA/FASTQ atau klik "Coba dataset demo", lalu unduh hasilnya. Tidak perlu instalasi apapun.
 
+### Via Desktop App
+
+Download `SeqFyre.exe` dari [GitHub Releases](https://github.com/FDZ3006/seqfyre/releases/latest), lalu jalankan langsung dengan double click. Tidak perlu install Python. Mendukung drag-and-drop berkas FASTA/FASTQ dan ekspor hasil ke ZIP.
+
 ### Via Lokal
 
 Untuk menjalankan di komputer sendiri:
@@ -215,6 +225,8 @@ python -m unittest discover -s tests -v
 All core logic is implemented in Python. Reads FASTA or FASTQ files, computes nucleotide frequency, sorts sequences by GC content, and produces visualizations and CSV export. HTML, CSS, and JavaScript in this repository serve only as the web display interface and contain no analysis logic.
 
 **Access directly (no installation required):** https://web-production-4b2df.up.railway.app
+
+**Download desktop app:** [SeqFyre.exe - GitHub Releases](https://github.com/FDZ3006/seqfyre/releases/latest) (Windows, no Python installation needed)
 
 ---
 
@@ -320,6 +332,10 @@ seqfyre/
 ### Via Website (recommended)
 
 Open https://web-production-4b2df.up.railway.app in your browser, upload a FASTA/FASTQ file or click "Try demo dataset", then download the results. No installation required.
+
+### Via Desktop App
+
+Download `SeqFyre.exe` from [GitHub Releases](https://github.com/FDZ3006/seqfyre/releases/latest) and run it with a double-click. No Python installation needed. Supports drag-and-drop FASTA/FASTQ files and ZIP export of results.
 
 ### Via Local
 
